@@ -444,3 +444,141 @@ function setGenderEmpDept(obj){
     chartLineGenderEmpDept = new Chart(ChartMaleFemaleMain, config);
     // Prepare Chart End
 }
+
+// New Chart Start
+
+function setYearEmpDept(obj){
+    var DataSets = [];   
+    var Labels = []; 
+    var Number = 0;
+    $.each(obj.year_emp_dept, function(key, year){
+        var Data = [];
+        Labels = [];
+        $.each(year, function(year_key, year_data){
+            Data.push(year_data.total);
+            Labels.push(year_data.dept_name);
+        });
+        DataSets.push({
+                data: Data,
+                backgroundColor: window.chartNumberColors[Number],
+                borderColor: window.chartNumberColors[Number],
+                pointBackgroundColor: window.chartNumberColors[Number],
+                fill: false,
+                label: key
+            });        
+        Number++;
+    });        
+    // Prepare Json data End
+
+    // Prepare Chart Start
+    var chartOptions = {
+        segmentShowStroke    : true,
+        segmentStrokeColor   : '#fff',
+        segmentStrokeWidth   : 1,
+        percentageInnerCutout: 0, 
+        animationSteps       : 100,
+        animationEasing      : 'easeOutBounce',
+        animateRotate        : true,
+        animateScale         : false,
+        responsive           : true,
+        maintainAspectRatio  : false,
+        legendTemplate       : '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<segments.length; i++){%><li><span style="background-color:<%=segments[i].fillColor%>"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>',
+        legend: {
+            display: true,
+            position: 'bottom',
+            fontSize: 12,
+            boxWidth: 20
+        },
+        title: {
+            display: true,
+            text: 'Employees Departement Per Years'
+        },
+        scale: {
+          ticks: {
+            beginAtZero: true
+          }
+        },
+        point: {
+            radius: 2,
+            hitRadius: 2,
+            hoverRadius: 10
+        }
+    };    
+    var config = {
+          type: 'radar',
+          data: {
+                  labels:Labels,
+                  datasets: DataSets
+              },
+          options: chartOptions
+    };
+    var myChart = $('#RadarEmpDept').get(0).getContext('2d');
+    if(typeof chartRadarEmpDept != 'undefined' ){
+        chartRadarEmpDept.destroy();
+    }
+    chartRadarEmpDept = new Chart(myChart, config);
+    // Prepare Chart End
+}
+
+function setBarYearEmpDept(obj){
+    var DataSets = [];   
+    var Labels = []; 
+    var Number = 0;
+    $.each(obj.year_emp_dept, function(key, year){
+        var Data = [];
+        Labels = [];
+        $.each(year, function(year_key, year_data){
+            Data.push(year_data.total);
+            Labels.push(year_data.dept_name);
+        });
+        DataSets.push({
+                data: Data,
+                backgroundColor: window.chartNumberColors[Number],
+                borderColor: window.chartNumberColors[Number],
+                pointBackgroundColor: window.chartNumberColors[Number],
+                fill: false,
+                label: key
+            });        
+        Number++;
+    });        
+    // Prepare Json data End
+
+    // Prepare Chart Start
+    var chartOptions = {
+        segmentShowStroke    : true,
+        segmentStrokeColor   : '#fff',
+        segmentStrokeWidth   : 1,
+        percentageInnerCutout: 0, 
+        animationSteps       : 100,
+        animationEasing      : 'easeOutBounce',
+        animateRotate        : true,
+        animateScale         : false,
+        responsive           : true,
+        maintainAspectRatio  : false,
+        legendTemplate       : '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<segments.length; i++){%><li><span style="background-color:<%=segments[i].fillColor%>"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>',
+        legend: {
+            display: true,
+            position: 'bottom',
+            fontSize: 12,
+            boxWidth: 20
+        },
+        title: {
+            display: true,
+            text: 'Employees Departement Per Years'
+        }
+    };    
+    var config = {
+          type: 'horizontalBar',
+          data: {
+                  labels:Labels,
+                  datasets: DataSets
+              },
+          options: chartOptions
+    };
+    var myChart = $('#BarEmpDept').get(0).getContext('2d');
+    if(typeof chartBarEmpDept != 'undefined' ){
+        chartBarEmpDept.destroy();
+    }
+    chartBarEmpDept = new Chart(myChart, config);
+    // Prepare Chart End
+}

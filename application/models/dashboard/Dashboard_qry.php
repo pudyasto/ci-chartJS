@@ -32,6 +32,7 @@ class Dashboard_qry extends CI_Model{
             "mf_emp" => $this->getMaleFemaleEmp($first_period,$last_period),
             "dept_emp" => $this->getEmpDept($first_period,$last_period),
             "gender_dept_emp" => $this->getGenderEmpDept($first_period,$last_period),
+            "year_emp_dept" => $this->getYearEmpDept($first_period,$last_period),
         );
         return json_encode($res); 
         
@@ -151,6 +152,38 @@ class Dashboard_qry extends CI_Model{
                 "female" => $value['female'],
                 "dept_name" => $value['dept_name'],
             );
+        }
+        return $res;
+    }
+    
+    
+    
+    private function getYearEmpDept($first_period,$last_period){
+        $str = "SELECT 
+                    date_format(employees.hire_date,'%Y') hire_year,
+                    departments.dept_name,
+                    COUNT(dept_emp.emp_no) total
+                FROM departments
+                LEFT JOIN dept_emp ON departments.dept_no = dept_emp.dept_no
+                JOIN employees ON dept_emp.emp_no = employees.emp_no
+                WHERE date_format(employees.hire_date,'%Y') 
+                                    BETWEEN '{$first_period}' AND '{$last_period}'
+                GROUP BY departments.dept_name, date_format(employees.hire_date,'%Y')";
+        $query = $this->db->query($str);
+        $year = array();
+        foreach ($query->result_array() as $value) {
+            $year[$value['hire_year']] = $value['hire_year'];
+        }
+        $res = array();
+        foreach ($year as $yrs) {
+            foreach ($query->result_array() as $value) {
+                if($yrs===$value['hire_year']){
+                    $res[$value['hire_year']][]=array(
+                        "total" => $value['total'],
+                        "dept_name" => $value['dept_name'],
+                    );
+                }
+            }
         }
         return $res;
     }

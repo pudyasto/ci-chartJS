@@ -121,6 +121,20 @@
                           </div>
                         </div>
                     </div>
+                    <div class="col-lg-7">
+                        <div class="col-lg-12">
+                          <div class="chart-wrapper" style="height:500px;">
+                            <canvas id="RadarEmpDept" class="chart" height="500"></canvas>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="col-lg-12">
+                          <div class="chart-wrapper" style="height:500px;">
+                            <canvas id="BarEmpDept" class="chart" height="500"></canvas>
+                          </div>
+                        </div>
+                    </div>
                 </div>
               </div>
             </div>
@@ -165,6 +179,8 @@
                 setMaleFemaleMain(obj);
                 setEmpDept(obj);
                 setGenderEmpDept(obj);
+                setYearEmpDept(obj);
+                setBarYearEmpDept(obj);
                 $(".btn-preview").attr("disabled",false);
             },
             error:function(event, textStatus, errorThrown) {
